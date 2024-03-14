@@ -1,0 +1,14 @@
+# Files
+creds.py
+
+# Environment files
+.env
+.venv
+
+# Directories
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# Other
+happy-sad-800x800-1-removebg-preview.png
