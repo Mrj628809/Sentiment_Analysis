@@ -4,6 +4,8 @@ creds.py
 # Environment files
 .env
 .venv
+venv/      
+env/
 
 # Directories
 __pycache__/
