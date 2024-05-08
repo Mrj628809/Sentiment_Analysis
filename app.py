@@ -10,10 +10,10 @@ def home():
 @app.route("/analyze_comments", methods=["POST"])
 def analyze_comments():
     content = request.get_json()
-    video_id = content["video_id"]
+    url_or_id = content["video_url"]
 
     # Fetch comments and analyze sentiment
-    comments_df = sa.fetch_youtube_comments(video_id)
+    comments_df = sa.fetch_youtube_comments(url_or_id)
     sentiment_scores = sa.analyze_sentiment(comments_df["text"])
     sentiment_counts = {
         "Positive": 0,

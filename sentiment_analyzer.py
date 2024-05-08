@@ -7,9 +7,24 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from urllib.parse import urlparse, parse_qs
 # import matplotlib.pyplot as plt
 
-def fetch_youtube_comments(video_id):
+def extract_video_id(url):
+    #Extract the video ID from a full YouTube URL.
+    url_data = urlparse(url)
+    query = parse_qs(url_data.query)
+    video_id = query.get("v")
+    if video_id:
+        return video_id[0]
+    else:
+        # Handle shortened YouTube URLs
+        pattern = r"(youtu\.be/|youtube.com/(embed/|v/|shorts/))([^\?&\"' >]+)"
+        match = re.search(pattern, url)
+        return match.group(3) if match else None
+    
+def fetch_youtube_comments(url_or_id):
+    video_id = extract_video_id(url_or_id) if "youtube.com" in url_or_id or "youtu.be" in url_or_id else url_or_id
     youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=creds.DEVELOPER_KEY)
     comments = []
     next_page_token = None

@@ -1,13 +1,13 @@
 let sentimentPieChart = null;
 
 function fetchAndDisplayResults() {
-    const videoId = document.getElementById("videoId").value;
+    const videoUrl = document.getElementById("videoUrl").value;
     fetch("/analyze_comments", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ video_id: videoId })
+        body: JSON.stringify({ video_url: videoUrl })
     })
     .then(response => response.json())
     .then(data => {
@@ -83,6 +83,3 @@ function displayCounts(sentimentCounts) {
     
     updateChart(sentimentCounts);
 }
-
-
-
