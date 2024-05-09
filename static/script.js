@@ -1,4 +1,5 @@
 let sentimentPieChart = null;
+let sentimentBarChart = null;
 
 function fetchAndDisplayResults() {
     const videoUrl = document.getElementById("videoUrl").value;
@@ -40,8 +41,8 @@ function fetchAndDisplayResults() {
 // }
 
 function initializeChart() {
-    const ctx = document.getElementById("sentimentPieChart").getContext("2d");
-    sentimentPieChart = new Chart(ctx, {
+    const pieCtx = document.getElementById("sentimentPieChart").getContext("2d");
+    sentimentPieChart = new Chart(pieCtx, {
         type: "pie",
         data: {
             labels: ["Positive", "Negative", "Neutral"],
@@ -56,6 +57,33 @@ function initializeChart() {
             maintainAspectRatio: false
         }
     });
+
+    const barCtx = document.getElementById('sentimentBarChart').getContext('2d');
+    sentimentBarChart = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: ["Positive", "Negative", "Neutral"],
+            datasets: [{
+                data: [0, 0, 0], // Initialize with zeros
+                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 }
 
 function updateChart(sentimentCounts) {
@@ -65,6 +93,13 @@ function updateChart(sentimentCounts) {
         sentimentCounts["Neutral"] || 0
     ];
     sentimentPieChart.update();
+
+    sentimentBarChart.data.datasets[0].data = [
+        sentimentCounts["Positive"] || 0,
+        sentimentCounts["Negative"] || 0,
+        sentimentCounts["Neutral"] || 0
+    ];
+    sentimentBarChart.update();
 }
 
 function displayCounts(sentimentCounts) {
