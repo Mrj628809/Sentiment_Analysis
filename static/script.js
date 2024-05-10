@@ -1,5 +1,6 @@
-let sentimentPieChart = null;
+let sentimentDoughnutChart = null;
 let sentimentBarChart = null;
+let sentimentLineChart = null;
 
 function fetchAndDisplayResults() {
     const videoUrl = document.getElementById("videoUrl").value;
@@ -14,6 +15,7 @@ function fetchAndDisplayResults() {
     .then(data => {
         // displayResults(data.sentiment_scores);
         displayCounts(data.sentiment_counts);
+        displayLineChart(data.sentiment_over_time);
     })
     .catch(error => console.error("Error:", error));
 }
@@ -41,15 +43,15 @@ function fetchAndDisplayResults() {
 // }
 
 function initializeChart() {
-    const pieCtx = document.getElementById("sentimentPieChart").getContext("2d");
-    sentimentPieChart = new Chart(pieCtx, {
-        type: "pie",
+    const doughnutCtx = document.getElementById("sentimentDoughnutChart").getContext("2d");
+    sentimentDoughnutChart = new Chart(doughnutCtx, {
+        type: "doughnut",
         data: {
             labels: ["Positive", "Negative", "Neutral"],
             datasets: [{
-                data: [0, 0, 0], // Initialize with zeros
-                backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
-                hoverBackgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"]
+                data: [0, 0, 0], 
+                backgroundColor: ["#3699C8", "#8ABDD5", "#81D5FD"],
+                hoverBackgroundColor: ["#3699C8", "#8ABDD5", "#81D5FD"]
             }]
         },
         options: {
@@ -58,15 +60,15 @@ function initializeChart() {
         }
     });
 
-    const barCtx = document.getElementById('sentimentBarChart').getContext('2d');
+    const barCtx = document.getElementById("sentimentBarChart").getContext("2d");
     sentimentBarChart = new Chart(barCtx, {
-        type: 'bar',
+        type: "bar",
         data: {
             labels: ["Positive", "Negative", "Neutral"],
             datasets: [{
-                data: [0, 0, 0], // Initialize with zeros
-                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                data: [0, 0, 0], 
+                backgroundColor: ["#3699C8", "#8ABDD5", "#81D5FD"],
+                hoverBackgroundColor: ["#3699C8", "#8ABDD5", "#81D5FD"],
             }]
         },
         options: {
@@ -84,15 +86,40 @@ function initializeChart() {
             }
         }
     });
+
+    const lineCtx = document.getElementById("sentimentLineChart").getContext("2d");
+    sentimentLineChart = new Chart(lineCtx, {
+        type: "line",
+        data: {
+            labels: [], 
+            datasets: [{
+                label: "Sentiment Over Time",
+                data: [], 
+                borderColor: "#3699C8",
+                backgroundColor: "transparent",
+                pointRadius: 1,
+                pointHoverRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 }
 
 function updateChart(sentimentCounts) {
-    sentimentPieChart.data.datasets[0].data = [
+    sentimentDoughnutChart.data.datasets[0].data = [
         sentimentCounts["Positive"] || 0,
         sentimentCounts["Negative"] || 0,
         sentimentCounts["Neutral"] || 0
     ];
-    sentimentPieChart.update();
+    sentimentDoughnutChart.update();
 
     sentimentBarChart.data.datasets[0].data = [
         sentimentCounts["Positive"] || 0,
@@ -100,6 +127,17 @@ function updateChart(sentimentCounts) {
         sentimentCounts["Neutral"] || 0
     ];
     sentimentBarChart.update();
+}
+
+function displayLineChart(sentimentOverTime) {
+    sentimentOverTime.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    const timestamps = sentimentOverTime.map(entry => entry.timestamp);
+    const sentiments = sentimentOverTime.map(entry => entry.sentiment);
+
+    sentimentLineChart.data.labels = timestamps;
+    sentimentLineChart.data.datasets[0].data = sentiments;
+    sentimentLineChart.update();
 }
 
 function displayCounts(sentimentCounts) {
@@ -112,7 +150,7 @@ function displayCounts(sentimentCounts) {
         countsContainer.appendChild(countDiv);
     });
 
-    if (!sentimentPieChart) {
+    if (!sentimentDoughnutChart) {
         initializeChart();
     }
     

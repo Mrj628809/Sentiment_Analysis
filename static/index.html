@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentiment Analysis Results</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
 </head>
 <body>
     <h1>YouTube Comment Sentiment Analysis</h1>
@@ -14,10 +16,15 @@
     <hr class="dashed">
     <!-- <div id="results"></div> -->
     <div style="max-width: 500px;">
-        <canvas id="sentimentPieChart"></canvas> <!-- Fixed max size for the chart -->
+        <canvas id="sentimentDoughnutChart"></canvas>
     </div>
     <div style="max-width: 500px;">
-        <canvas id="sentimentBarChart"></canvas> <!-- Fixed max size for the chart -->
+        <canvas id="sentimentBarChart"></canvas> 
+    </div>
+    <div style="max-width: 800px;">
+        <div class="chart-container" style="height: 400px;"> 
+            <canvas id="sentimentLineChart"></canvas>
+        </div>
     </div>
     <div id="counts"></div>
     

@@ -15,6 +15,7 @@ def analyze_comments():
     # Fetch comments and analyze sentiment
     comments_df = sa.fetch_youtube_comments(url_or_id)
     sentiment_scores = sa.analyze_sentiment(comments_df["text"])
+    
     sentiment_counts = {
         "Positive": 0,
         "Negative": 0,
@@ -30,10 +31,16 @@ def analyze_comments():
         else:
             sentiment_counts["Neutral"] += 1
 
-    return jsonify({
+    sentiment_over_time_df = sa.get_sentiment_over_time(url_or_id)
+
+    response_data = {
         "sentiment_scores": sentiment_scores,
-        "sentiment_counts": sentiment_counts
-    })
+        "sentiment_counts": sentiment_counts,
+        "sentiment_over_time": sentiment_over_time_df.to_dict(orient="records")
+    }
+
+    print("Response Data:", response_data)  # Debug statement
+    return jsonify(response_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
