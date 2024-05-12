@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentiment Analysis Results</title>
+    <link rel="stylesheet" href="/static/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
@@ -14,22 +15,63 @@
     <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
     <button onclick="fetchAndDisplayResults()">Analyze Comments</button>
     <hr class="dashed">
-    <!-- <div id="results"></div> -->
-    <div style="max-width: 500px;">
-        <canvas id="sentimentDoughnutChart"></canvas>
-    </div>
-    <div style="max-width: 900px;">
-        <canvas id="sentimentBarChart"></canvas> 
-    </div>
-    <div style="max-width: 800px;">
-        <div class="chart-container" style="height: 400px;"> 
+
+    <section class="charts-grid">
+        <div class="chart-info">
+            <div id="counts"></div>
+        </div>
+        <div class="chart">
+            <canvas id="sentimentDoughnutChart"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="sentimentBarChart"></canvas>
+        </div>
+        <div class="chart full-width">
             <canvas id="sentimentLineChart"></canvas>
         </div>
-    </div>
-    <div id="counts"></div>
+    </section>
     
-
     <script src="/static/script.js"></script>
 </body>
 </html>
+-->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
+</head>
+<body>
+    <h1>YouTube Comment Sentiment Analysis</h1>
+    <p><b>Warning:</b> Larger comment databases may take a while to load. Please allow a few minutes for the results to load.<br>Also, this program does not take into account comments made within comments.</p>
+    <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
+    <button onclick="fetchAndDisplayResults()">Analyze Comments</button>
+    <div id="loader" hidden>Loading...</div>
+    <hr class="dashed">
+
+    <section class="charts-grid">
+        <div class="chart-info">
+            <div id="counts"></div>
+        </div>
+        <div class="chart">
+            <canvas id="sentimentDoughnutChart"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="sentimentBarChart"></canvas>
+        </div>
+    </section>
+    <section class="line-chart-section">
+        <div class="chart full-width">
+            <canvas id="sentimentLineChart"></canvas>
+        </div>
+    </section>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>

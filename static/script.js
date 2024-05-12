@@ -1,9 +1,7 @@
-let sentimentDoughnutChart = null;
-let sentimentBarChart = null;
-let sentimentLineChart = null;
-
 function fetchAndDisplayResults() {
     const videoUrl = document.getElementById("videoUrl").value;
+    document.getElementById("loader").hidden = false;
+
     fetch("/analyze_comments", {
         method: "POST",
         headers: {
@@ -13,34 +11,14 @@ function fetchAndDisplayResults() {
     })
     .then(response => response.json())
     .then(data => {
-        // displayResults(data.sentiment_scores);
         displayCounts(data.sentiment_counts);
         displayLineChart(data.sentiment_over_time);
     })
-    .catch(error => console.error("Error:", error));
+    .catch(error => console.error("Error:", error))
+    .finally(() => {
+        document.getElementById("loader").hidden = true;
+    });
 }
-
-// function categorizeSentiment(SentimentScore) {
-//     if (SentimentScore > 0) {
-//         return "Positive";
-//     } else if (SentimentScore < 0) {
-//         return "Negative";
-//     } else {
-//         return "Neutral";
-//     }
-// }
-
-// function displayResults(sentimentScores) {
-//     const resultsContainer = document.getElementById("results");
-//     resultsContainer.innerHTML = ""; // Clear previous results
-
-//     sentimentScores.forEach(score => {
-//         const category = categorizeSentiment(score.compound);
-//         const sentimentDiv = document.createElement("div");
-//         sentimentDiv.innerHTML = `Sentiment: ${category}`;
-//         resultsContainer.appendChild(sentimentDiv);
-//     });
-// }
 
 function initializeChart() {
     const doughnutCtx = document.getElementById("sentimentDoughnutChart").getContext("2d");
@@ -140,7 +118,7 @@ function displayLineChart(sentimentOverTime) {
     sentimentLineChart.update();
 }
 
-function displayCounts(sentimentCounts) {
+function displayCounts(sentimentCounts) {    
     const countsContainer = document.getElementById("counts");
     countsContainer.innerHTML = ""; // Clear previous counts
 
@@ -156,3 +134,7 @@ function displayCounts(sentimentCounts) {
     
     updateChart(sentimentCounts);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    initializeChart();
+});

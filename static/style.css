@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2a2a2d; 
+    margin: 0;
+    padding: 20px;
+    color: #ddd; 
+}
+
+h1 {
+    color: #ffffff; 
+}
+
+p {
+    color: #ccc; 
+}
+
+input, button {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #555; 
+    background-color: #333; 
+    color: #fff; 
+    width: calc(100% - 22px);
+}
+
+button {
+    background-color: #1461ac; 
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0a4678; 
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.chart-info, .chart {
+    font-size: 40px;
+    background: #424245; 
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px; 
+}
+
+.line-chart-section {
+    margin-top: 20px; 
+}
+
+@media (max-width: 768px) {
+    .charts-grid, .line-chart-section {
+        grid-template-columns: 1fr;
+    }
+
+    input, button {
+        width: 100%;
+    }
+}
+

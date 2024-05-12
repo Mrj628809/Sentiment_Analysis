@@ -39,7 +39,7 @@ def analyze_comments():
         "sentiment_over_time": sentiment_over_time_df.to_dict(orient="records")
     }
 
-    print("Response Data:", response_data)  # Debug statement
+    # print("Response Data:", response_data)  # Debug statement
     return jsonify(response_data)
 
 if __name__ == "__main__":
