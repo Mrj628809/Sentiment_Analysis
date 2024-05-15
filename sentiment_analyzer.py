@@ -89,15 +89,6 @@ def analyze_sentiment(comments):
 
     return sentiment_scores
 
-# def get_sentiment_over_time(url_or_id):
-#     comments_df = fetch_youtube_comments(url_or_id)
-#     sentiments = analyze_sentiment(comments_df['text'])
-#     results_df = pd.DataFrame({
-#         'timestamp': comments_df['published_at'],
-#         'sentiment': [sent['compound'] for sent in sentiments]
-#     })
-    
-#     return results_df
 def get_sentiment_over_time(url_or_id):
     comments_df = fetch_youtube_comments(url_or_id)
     sentiments = analyze_sentiment(comments_df['text'])
