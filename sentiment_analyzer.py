@@ -8,6 +8,12 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from urllib.parse import urlparse, parse_qs
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
+
 
 def extract_video_id(url):
     #Extract the video ID from a full YouTube URL.
