@@ -1,6 +1,6 @@
 # Files
-tesing.ipynb
-Youtube_Comments.ipynb
+*.csv
+*.ipynb
 
 # Environment files
 .env
