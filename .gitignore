@@ -16,3 +16,23 @@ __pycache__/
 # Other
 happy-sad-800x800-1-removebg-preview.png
 .env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# IDEs
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# AWS Elastic Beanstalk specific
+.ebextensions/
+Dockerrun.aws.json
