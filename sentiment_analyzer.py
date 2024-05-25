@@ -36,7 +36,7 @@ def fetch_youtube_comments(url_or_id):
 
     while True:
         request = youtube.commentThreads().list(
-            part="snippet",
+            part="snippet,replies",
             videoId=video_id,
             maxResults=100, # Maximum allowed by Youtube Data API
             pageToken=next_page_token if next_page_token else ""
@@ -50,14 +50,54 @@ def fetch_youtube_comments(url_or_id):
                 comment["publishedAt"],
                 comment["updatedAt"],
                 comment["likeCount"],
-                comment["textDisplay"]
+                comment["textDisplay"],
+                None  # No reply_to for top-level comments
             ])
+            # Check for replies
+            if 'replies' in item:
+                for reply in item['replies']['comments']:
+                    reply_comment = reply['snippet']
+                    comments.append([
+                        reply_comment["authorDisplayName"],
+                        reply_comment["publishedAt"],
+                        reply_comment["updatedAt"],
+                        reply_comment["likeCount"],
+                        reply_comment["textDisplay"],
+                        comment["authorDisplayName"]  # Set reply_to to top-level comment author
+                    ])
+
         next_page_token = response.get("nextPageToken")
 
         if not next_page_token:
             break
 
-    return pd.DataFrame(comments, columns=["author", "published_at", "updated_at", "like_count", "text"])
+    return pd.DataFrame(comments, columns=["author", "published_at", "updated_at", "like_count", "text", "reply_to"])
+    
+    # while True:
+    #     request = youtube.commentThreads().list(
+    #         part="snippet",
+    #         videoId=video_id,
+    #         maxResults=100, # Maximum allowed by Youtube Data API
+    #         pageToken=next_page_token if next_page_token else ""
+    #     )
+    #     response = request.execute()
+
+    #     for item in response["items"]:
+    #         comment = item["snippet"]["topLevelComment"]["snippet"]
+    #         comments.append([
+    #             comment["authorDisplayName"],
+    #             comment["publishedAt"],
+    #             comment["updatedAt"],
+    #             comment["likeCount"],
+    #             comment["textDisplay"]
+    #         ])
+
+    #     next_page_token = response.get("nextPageToken")
+
+    #     if not next_page_token:
+    #         break
+
+    # return pd.DataFrame(comments, columns=["author", "published_at", "updated_at", "like_count", "text"])
 
 def preprocess_comment(comment):
     # Lowercase everything

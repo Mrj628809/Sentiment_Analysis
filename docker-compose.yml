@@ -1,11 +1,9 @@
-version: '3'
+version: '3.8'
+
 services:
   web:
-    build: .
+    image: mrj628809/youtube-sentiment-analysis:latest
     ports:
-      - "5001:5000"
-    env_file:
-      - .env
+      - "5001:5001"
     environment:
-      - FLASK_APP=app.py
-      - FLASK_RUN_HOST=0.0.0.0
+      - ENVIRONMENT=production
