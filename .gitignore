@@ -5,7 +5,7 @@
 # Environment files
 .env
 .venv
-venv/      
+venv/
 env/
 
 # Directories
@@ -15,7 +15,6 @@ __pycache__/
 
 # Other
 happy-sad-800x800-1-removebg-preview.png
-.env
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
